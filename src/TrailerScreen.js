@@ -1,33 +1,30 @@
 import React, { Component } from 'react';
-import { View, Text, Switch, StyleSheet } from 'react-native';
+import { View, Image, Text } from 'react-native';
 
 export const TRAILER_SCREEN_NAME = 'TRAILER_NAME';
 
 export default class TrailerScreen extends Component {
 
+    static navigationOptions = ({navigation}) => ({
+        title: navigation.state.params.trailer.title,
+    });
+
     constructor(props) {
         super(props);
 
-        this.todo = props.todo;
-        
-        this.styleSwitch = StyleSheet.create({
-            textDecorationLine: (this.todo.isDone) ? 'line-through' : 'none'
-        });
-    }
-
-    //Handle switch value change
-    changeValue(newValue) {
-        this.todo.isDone = newValue
     }
 
     render() {
+        //Receiving params of navigation
+        const {trailer} = this.props.navigation.state.params;
+
         return (
-        <View>
-            <Text style={{textDecorationLine: (this.todo.isDone) ? 'line-through' : 'none'}}>
-                {this.todo.title.toUpperCase()}</Text>
-            <Switch 
-                value={this.todo.isDone}
-                onValueChange={(newValue) => this.changeValue(newValue)}></Switch>
+        <View style={{flex: 1, flexDirection: 'column'}}>
+            <Image
+                style={{flex: 1, width: null, height: null, resizeMode: 'contain'}}
+                source={{uri: trailer.poster}}/>
+                <Text>{trailer.genre}</Text>
+                <Text>{trailer.actors}</Text>
         </View>
         );
     }
